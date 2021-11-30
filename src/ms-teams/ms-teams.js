@@ -1,23 +1,3 @@
-addEventListener("fetch", event => {
-	const { request } = event
-	if (request.method === "POST") {
-	  return event.respondWith(handleRequest(request))
-	}
-	else if (request.method === "GET") {
-	  return event.respondWith(new Response(`The request was a GET`))
-	}
-  })
-
-async function handleRequest(request) {
-  let pathname = new URL(request.url).pathname
-  let reqBody;
-  if(pathname == "/msteams"){
-    reqBody = await msTeams(request)
-  }
-  const retBody = `The request body sent in was ${JSON.stringify(reqBody)}`
-  return new Response(retBody)
-}
-
 export async function msTeams(request) {
     const { headers } = request
     const contentType = headers.get("content-type") || ""

@@ -13,13 +13,17 @@ addEventListener("fetch", event => {
 
 async function handleRequest(request) {
   let pathname = new URL(request.url).pathname
+  // return new Response(pathname)
   let reqBody;
   if(pathname == "/msteams"){
     reqBody = await msTeams(request)
   }
-  if(pathname == "/slack"){
+  else if(pathname == "/slack"){
     reqBody = await slack(request)
   }
-  const retBody = `The request body sent in was ${JSON.stringify(reqBody)}`
+  else{
+    return new Response("Invailid path mentioned")
+  }
+  const retBody = `The request body sent in ${JSON.stringify(reqBody)}`
   return new Response(retBody)
 }
