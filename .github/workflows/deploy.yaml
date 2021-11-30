@@ -1,11 +1,9 @@
 name: Build
-on:
-  push:
+on: [push]
 jobs:
     deploy:
       runs-on: ubuntu-latest
       timeout-minutes: 60
-      needs: test
       steps:
         - uses: actions/checkout@v2
         - name: Publish
