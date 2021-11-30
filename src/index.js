@@ -1,5 +1,5 @@
 
-import {msTeam} from './msteam/msteam.js'
+import {msTeams} from './ms-teams/ms-teams.js'
 import { slack } from './slack/slack.js'
 addEventListener("fetch", event => {
 	const { request } = event
@@ -14,8 +14,8 @@ addEventListener("fetch", event => {
 async function handleRequest(request) {
   let pathname = new URL(request.url).pathname
   let reqBody;
-  if(pathname == "/msteam"){
-    reqBody = await msTeam(request)
+  if(pathname == "/msteams"){
+    reqBody = await msTeams(request)
   }
   if(pathname == "/slack"){
     reqBody = await slack(request)
