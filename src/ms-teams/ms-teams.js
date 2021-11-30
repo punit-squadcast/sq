@@ -11,17 +11,17 @@ addEventListener("fetch", event => {
 async function handleRequest(request) {
   let pathname = new URL(request.url).pathname
   let reqBody;
-  if(pathname == "/msteam"){
-    reqBody = await msTeam(request)
+  if(pathname == "/msteams"){
+    reqBody = await msTeams(request)
   }
   const retBody = `The request body sent in was ${JSON.stringify(reqBody)}`
   return new Response(retBody)
 }
 
-export async function msTeam(request) {
+export async function msTeams(request) {
     const { headers } = request
     const contentType = headers.get("content-type") || ""
-    let msTeamJSON = {
+    let msTeamsJSON = {
         "@context": "https://schema.org/extensions",
         "@type": "MessageCard",
         "themeColor": "0070C6",
@@ -70,31 +70,31 @@ export async function msTeam(request) {
         title = title + "\n\n" + bodyy.message
         text = "### Description \n\n" + bodyy.description + "\n\n**Service Name**:" + serviceName + "\n\n**Alert soure**: " + alertSource
         url = "https://app.squadcast.com/incident/" + bodyy.id
-        msTeamJSON.title = title
-        msTeamJSON.text = text
-        msTeamJSON.themeColor = themeColor
-        msTeamJSON.potentialAction[0].targets[0].uri = url
-        let msteamUrl = headers.get("msteamurl")
+        msTeamsJSON.title = title
+        msTeamsJSON.text = text
+        msTeamsJSON.themeColor = themeColor
+        msTeamsJSON.potentialAction[0].targets[0].uri = url
+        let msteamsUrl = headers.get("msteamsurl")
         const init = {
-            body: JSON.stringify(msTeamJSON),
+            body: JSON.stringify(msTeamsJSON),
             method: "POST",
             headers: {
               "content-type": "application/json;charset=UTF-8",
             },
         }
-        if (msteamUrl != undefined) {
-            msteamUrl = msteamUrl.split(",")
+        if (msteamsUrl != undefined) {
+            msteamsUrl = msteamsUrl.split(",")
         }
         else{
-            return "msteamurl not found in header"
+            return "msteamsurl not found in header"
         }
-        for (let url in msteamUrl) {
-            let temp_url = msteamUrl[url].trim()
+        for (let url in msteamsUrl) {
+            let temp_url = msteamsUrl[url].trim()
             if (temp_url.length > 0) {
                 await fetch(temp_url, init)
             }
         }
-        return msTeamJSON
+        return msTeamsJSON
     }
     else {
         return 'a file';
