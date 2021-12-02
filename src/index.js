@@ -2,6 +2,7 @@
 import {msTeams} from './ms-teams/ms-teams.js'
 import { slack } from './slack/slack.js'
 import { discord } from "./discord/discord.js"
+import { trello } from "./trello/trello.js"
 addEventListener("fetch", event => {
 	const { request } = event
 	if (request.method === "POST") {
@@ -24,6 +25,9 @@ async function handleRequest(request) {
   }
   else if(pathname == "/discord"){
     reqBody = await discord(request)
+  }
+  else if(pathname == "/trello"){
+    reqBody = await trello(request)
   }
   else{
     return new Response("Invailid path mentioned")
