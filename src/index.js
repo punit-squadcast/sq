@@ -1,6 +1,7 @@
 
 import {msTeams} from './ms-teams/ms-teams.js'
 import { slack } from './slack/slack.js'
+import { discord } from "./discord/discord.js"
 addEventListener("fetch", event => {
 	const { request } = event
 	if (request.method === "POST") {
@@ -20,6 +21,9 @@ async function handleRequest(request) {
   }
   else if(pathname == "/slack"){
     reqBody = await slack(request)
+  }
+  else if(pathname == "/discord"){
+    reqBody = await discord(request)
   }
   else{
     return new Response("Invailid path mentioned")
