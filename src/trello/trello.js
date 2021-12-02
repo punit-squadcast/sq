@@ -25,8 +25,9 @@ export async function trello(request) {
         serviceName = bodyy.service.name
         alertSource = bodyy.alert_source.type
         name = name + bodyy.message
-        message = "\n**Service Name**:" + serviceName + "\n**Alert soure**: " + alertSource +"\n"+ bodyy.description+"**Ticket URL**"+url
-        message = message.replace(/\n+/g, "")
+        message = "\n**Service Name**:" + serviceName + "\n**Alert soure**: " + alertSource +"\n"+ bodyy.description+"**Incident URL**: "+url
+        message = message.replace(/\n+/g, "\n")
+        message = message.replace(/\*\*/g, "")
         name = name.replace(/\n+/g, "")
         let trellokey = headers.get("trellokey")
         let trellotoken = headers.get("trellotoken")
