@@ -4,7 +4,8 @@ export async function discord(request) {
     let discorJson = {
         "embeds": [
             {
-                "description": ""
+                "description": "",
+                "color": ""
             }
         ]
     }
@@ -16,18 +17,23 @@ export async function discord(request) {
         let serviceName = ""
         let alertSource = ""
         let url = ""
+        let color = ""
         url = "https://app.squadcast.com/incident/" + bodyy.id
         if (bodyy.event_type == "incident_resolved") {
             title = "**Resolved **"+"[**#"+bodyy.id+"**]("+url+")\n"
+            color = "2219410"
         }
         else if (bodyy.event_type == "incident_reassigned") {
             title = "**Reassigned** "+"[#**"+bodyy.id+"**]("+url+")\n"
+            color = "10027238"
         }
         else if (bodyy.event_type == "incident_acknowledged") {
             title = "**Acknowledged **"+"[#**"+bodyy.id+"**]("+url+")\n"
+            color = "14804480"
         }
         else if (bodyy.event_type == "incident_triggered") {
             title = "**Triggered **"+"[#**"+bodyy.id+"**]("+url+")\n"
+            color = "10027238"
         }
         serviceName = bodyy.service.name
         alertSource = bodyy.alert_source.type
@@ -37,6 +43,7 @@ export async function discord(request) {
         title = title.replace(/\n+/g, "\n")
         description = description.replace(/\*\*/g, "")
         discorJson.embeds[0].description = title+description
+        discorJson.embeds[0].color = color
         let discordUrl = headers.get("discordurl")
         const init = {
             body: JSON.stringify(discorJson),
